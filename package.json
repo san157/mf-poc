@@ -1,0 +1,23 @@
+{
+  "name": "mf-poc",
+  "private": true,
+  "scripts": {
+    "dev:children": "npm run build:children && concurrently \"npm --prefix apps/child-app-1 run preview\" \"npm --prefix apps/child-app-2 run preview\"",
+
+    "build:children": "npm --prefix apps/child-app-1 run build && npm --prefix apps/child-app-2 run build",
+
+    "dev:main": "npm --prefix apps/main-app run dev",
+
+    "dev": "concurrently \"npm run dev:children\" \"npm run dev:main\"",
+
+    "build": "npm --prefix apps/child-app-1 run build && npm --prefix apps/child-app-2 run build && npm --prefix apps/main-app run build",
+
+    "prod": "npm run build && concurrently \"npm --prefix apps/child-app-1 run preview\" \"npm --prefix apps/child-app-2 run preview\" \"npm --prefix apps/main-app run preview\"",
+    "lint": "concurrently \"npm --prefix apps/child-app-1 run lint\" \"npm --prefix apps/child-app-2 run lint\" \"npm --prefix apps/main-app run lint\"",
+
+    "lint:fix": "concurrently \"npm --prefix apps/child-app-1 run lint:fix\" \"npm --prefix apps/child-app-2 run lint:fix\" \"npm --prefix apps/main-app run lint:fix\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
